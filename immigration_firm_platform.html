@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immigration Form Automation - Law Firm Internal Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .print-section { page-break-inside: avoid; }
+         {
+            .no-print { display: none !important; }
+            body { font-size: 12px; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white shadow-lg no-print">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-balance-scale text-2xl"></i>
+                    <h1 class="text-xl font-bold">Immigration Form Automation Platform</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="current-user" class="text-sm">Welcome, Legal Assistant</span>
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="bg-white shadow-md border-b no-print">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-8 overflow-x-auto">
+                <button onclick="showTab('dashboard')" class="tab-btn py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium whitespace-nowrap">
+                    <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+                </button>
+                <button onclick="showTab('firm-setup')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap">
+                    <i class="fas fa-building mr-2"></i>Firm Setup
+                </button>
+                <button onclick="showTab('staff-management')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap">
+                    <i class="fas fa-users mr-2"></i>Staff Management
+                </button>
+                <button onclick="showTab('client-database')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap">
+                    <i class="fas fa-database mr-2"></i>Client Database
+                </button>
+                <button onclick="showTab('form-automation')" class="tab-btn py-4 px-2 border-b-2 border-transparent text-gray-500 hover:text-gray-700 whitespace-nowrap">
+                    <i class="fas fa-file-pdf mr-2"></i>Form Automation
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active print-section">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Daily Workflow Dashboard</h2>
+                <p class="text-gray-600">Overview of today's activities and pending tasks</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-users text-blue-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Active Clients</p>
+                            <p class="text-2xl font-semibold text-gray-900">127</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-file-alt text-green-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Forms Generated Today</p>
+                            <p class="text-2xl font-semibold text-gray-900">23</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-clock text-yellow-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Pending Reviews</p>
+                            <p class="text-2xl font-semibold text-gray-900">8</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-calendar-check text-purple-500 text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Deadlines This Week</p>
+                            <p class="text-2xl font-semibold text-gray-900">12</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity & Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-file-pdf text-red-500 mt-1"></i>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-900">I-485 form generated for Maria Rodriguez</p>
+                                <p class="text-xs text-gray-500">15 minutes ago by Sarah Johnson</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-user-plus text-green-500 mt-1"></i>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-900">New client added: John Chen</p>
+                                <p class="text-xs text-gray-500">1 hour ago by Michael Davis</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-edit text-blue-500 mt-1"></i>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-900">Client information updated for Anna Kowalski</p>
+                                <p class="text-xs text-gray-500">2 hours ago by Sarah Johnson</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fas fa-calendar text-purple-500 mt-1"></i>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-900">Appointment scheduled for David Kim</p>
+                                <p class="text-xs text-gray-500">3 hours ago by Legal Assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Quick Actions</h3>
+                    </div>
+                    <div class="px-6 py-4 space-y-3">
+                        <button onclick="showTab('client-database')" class="w-full flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-plus text-blue-600 mr-3"></i>
+                                <span class="text-blue-800 font-medium">Add New Client</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-blue-400"></i>
+                        </button>
+                        <button onclick="showTab('form-automation')" class="w-full flex items-center justify-between p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-pdf text-green-600 mr-3"></i>
+                                <span class="text-green-800 font-medium">Generate Form</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-green-400"></i>
+                        </button>
+                        <button class="w-full flex items-center justify-between p-3 bg-yellow-50 hover:bg-yellow-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-search text-yellow-600 mr-3"></i>
+                                <span class="text-yellow-800 font-medium">Search Clients</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-yellow-400"></i>
+                        </button>
+                        <button class="w-full flex items-center justify-between p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar text-purple-600 mr-3"></i>
+                                <span class="text-purple-800 font-medium">View Calendar</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-purple-400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Status Chart -->
+            <div class="mt-8 bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Case Status Overview</h3>
+                <div style="height: 300px;">
+                    <canvas id="caseStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Firm Setup Tab -->
+        <div id="firm-setup" class="tab-content print-section">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Firm Configuration</h2>
+                <p class="text-gray-600">Configure your law firm's basic information used across all forms and documents</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <form id="firm-setup-form" class="space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Firm Name *</label>
+                            <input type="text" id="firm-name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="Immigration Law Associates" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Primary Phone *</label>
+                            <input type="tel" id="firm-phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="(555) 123-4567" required>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fax Number</label>
+                            <input type="tel" id="firm-fax" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="(555) 123-4568">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="firm-email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="info@immigrationlawassociates.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Business Address *</label>
+                        <textarea id="firm-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                  required>1234 Legal Boulevard, Suite 500
+Immigration City, IC 12345</textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">State Bar Number</label>
+                            <input type="text" id="firm-bar-number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="SB123456">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Federal Tax ID</label>
+                            <input type="text" id="firm-tax-id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="12-3456789">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">State License Number</label>
+                            <input type="text" id="firm-license" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   value="IL123456">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium">
+                            <i class="fas fa-save mr-2"></i>Save Firm Configuration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Staff Management Tab -->
+        <div id="staff-management" class="tab-content print-section">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Staff Management</h2>
+                <p class="text-gray-600">Manage attorney profiles and legal assistant information for form preparation</p>
+            </div>
+
+            <!-- Attorney Profiles -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Attorney Profiles</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Attorney 1 -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-user-tie text-blue-600 text-xl mr-3"></i>
+                            <h4 class="text-lg font-medium text-gray-900">Attorney 1</h4>
+                        </div>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Sarah Johnson, Esq." required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Bar Number *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="123456" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">State Bar *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="California" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Direct Phone</label>
+                                <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="(555) 123-4567 ext. 101">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="sarah.johnson@immigrationlawassociates.com">
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                                Update Profile
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Attorney 2 -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-user-tie text-blue-600 text-xl mr-3"></i>
+                            <h4 class="text-lg font-medium text-gray-900">Attorney 2</h4>
+                        </div>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Michael Davis, Esq." required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Bar Number *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="789012" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">State Bar *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="California" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Direct Phone</label>
+                                <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="(555) 123-4567 ext. 102">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="michael.davis@immigrationlawassociates.com">
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+                                Update Profile
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Assistants -->
+            <div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Legal Assistants</h3>
+                    <button onclick="addAssistant()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm">
+                        <i class="fas fa-plus mr-2"></i>Add Assistant
+                    </button>
+                </div>
+                
+                <div id="assistants-list" class="space-y-4">
+                    <!-- Assistant 1 -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-user text-green-600 text-lg mr-3"></i>
+                                <h4 class="font-medium text-gray-900">Legal Assistant</h4>
+                            </div>
+                            <button class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Jessica Martinez" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Senior Legal Assistant">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Credentials</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="CLA, NALA Certified">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assistant 2 -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-user text-green-600 text-lg mr-3"></i>
+                                <h4 class="font-medium text-gray-900">Legal Assistant</h4>
+                            </div>
+                            <button class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Robert Chen" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Legal Assistant">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Credentials</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       value="Paralegal Certificate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Database Tab -->
+        <div id="client-database" class="tab-content print-section">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Client Database</h2>
+                <p class="text-gray-600">Comprehensive client information management and case tracking</p>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <div class="flex flex-col lg:flex-row gap-4">
+                    <div class="flex-1">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                            <input type="text" placeholder="Search clients by name, A-number, or case type..." 
+                                   class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <select class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>All Case Types</option>
+                            <option>Family-Based</option>
+                            <option>Employment-Based</option>
+                            <option>Citizenship</option>
+                            <option>Asylum</option>
+                            <option>Other</option>
+                        </select>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                            <i class="fas fa-filter mr-2"></i>Filter
+                        </button>
+                        <button onclick="showAddClientModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md">
+                            <i class="fas fa-plus mr-2"></i>Add Client
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client List -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Active Clients</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">A-Number</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Case Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Attorney</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Updated</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                            <span class="text-blue-600 font-medium">MR</span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">Maria Rodriguez</div>
+                                            <div class="text-sm text-gray-500">maria.rodriguez@email.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">A123456789</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Family-Based</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Johnson</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 hours ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button class="text-green-600 hover:text-green-900 mr-3">Edit</button>
+                                    <button class="text-purple-600 hover:text-purple-900">Forms</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                                            <span class="text-green-600 font-medium">JC</span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">John Chen</div>
+                                            <div class="text-sm text-gray-500">john.chen@email.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">A987654321</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Employment-Based</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Approved</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Michael Davis</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1 day ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button class="text-green-600 hover:text-green-900 mr-3">Edit</button>
+                                    <button class="text-purple-600 hover:text-purple-900">Forms</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
+                                            <span class="text-purple-600 font-medium">AK</span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">Anna Kowalski</div>
+                                            <div class="text-sm text-gray-500">anna.kowalski@email.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">A456789123</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">Citizenship</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Under Review</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Johnson</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3 days ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button class="text-green-600 hover:text-green-900 mr-3">Edit</button>
+                                    <button class="text-purple-600 hover:text-purple-900">Forms</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Automation Tab -->
+        <div id="form-automation" class="tab-content print-section">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Form Automation</h2>
+                <p class="text-gray-600">Generate and auto-populate immigration forms with client and firm data</p>
+            </div>
+
+            <!-- Form Generation -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Form Selection -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Generate New Form</h3>
+                    
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Client *</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                <option value="">Choose a client...</option>
+                                <option value="maria-rodriguez">Maria Rodriguez (A123456789)</option>
+                                <option value="john-chen">John Chen (A987654321)</option>
+                                <option value="anna-kowalski">Anna Kowalski (A456789123)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Form Type *</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                <option value="">Select form type...</option>
+                                <option value="i-485">I-485 - Application to Register Permanent Residence</option>
+                                <option value="i-130">I-130 - Immigrant Petition for Alien Relative</option>
+                                <option value="i-765">I-765 - Application for Employment Authorization</option>
+                                <option value="n-400">N-400 - Application for Naturalization</option>
+                                <option value="g-28">G-28 - Notice of Entry of Appearance</option>
+                                <option value="i-131">I-131 - Application for Travel Document</option>
+                                <option value="i-589">I-589 - Application for Asylum and for Withholding</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Assigned Attorney *</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                <option value="">Select attorney...</option>
+                                <option value="sarah-johnson">Sarah Johnson, Esq.</option>
+                                <option value="michael-davis">Michael Davis, Esq.</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Prepared By</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="jessica-martinez">Jessica Martinez (Senior Legal Assistant)</option>
+                                <option value="robert-chen">Robert Chen (Legal Assistant)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes</label>
+                            <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                      placeholder="Any special instructions or notes for this form..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-medium">
+                            <i class="fas fa-file-pdf mr-2"></i>Generate Form
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Recent Forms -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Forms Generated</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-900">I-485 - Maria Rodriguez</div>
+                                    <div class="text-sm text-gray-500">Generated 15 minutes ago by Jessica Martinez</div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                    <i class="fas fa-download mr-1"></i>Download
+                                </button>
+                                <button class="text-green-600 hover:text-green-800 text-sm">
+                                    <i class="fas fa-eye mr-1"></i>Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-900">G-28 - John Chen</div>
+                                    <div class="text-sm text-gray-500">Generated 1 hour ago by Robert Chen</div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                    <i class="fas fa-download mr-1"></i>Download
+                                </button>
+                                <button class="text-green-600 hover:text-green-800 text-sm">
+                                    <i class="fas fa-eye mr-1"></i>Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-pdf text-red-500 text-xl mr-3"></i>
+                                <div>
+                                    <div class="font-medium text-gray-900">N-400 - Anna Kowalski</div>
+                                    <div class="text-sm text-gray-500">Generated 2 hours ago by Jessica Martinez</div>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                    <i class="fas fa-download mr-1"></i>Download
+                                </button>
+                                <button class="text-green-600 hover:text-green-800 text-sm">
+                                    <i class="fas fa-eye mr-1"></i>Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Templates -->
+            <div class="mt-8 bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Available Form Templates</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-file-alt text-blue-600 mr-2"></i>
+                            <h4 class="font-medium text-gray-900">I-485</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Application to Register Permanent Residence or Adjust Status</p>
+                        <div class="text-xs text-gray-500">
+                            <span class="bg-gray-100 px-2 py-1 rounded">Family-Based</span>
+                            <span class="bg-gray-100 px-2 py-1 rounded ml-1">Employment</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-file-alt text-green-600 mr-2"></i>
+                            <h4 class="font-medium text-gray-900">I-130</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Immigrant Petition for Alien Relative</p>
+                        <div class="text-xs text-gray-500">
+                            <span class="bg-gray-100 px-2 py-1 rounded">Family-Based</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-file-alt text-purple-600 mr-2"></i>
+                            <h4 class="font-medium text-gray-900">N-400</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Application for Naturalization</p>
+                        <div class="text-xs text-gray-500">
+                            <span class="bg-gray-100 px-2 py-1 rounded">Citizenship</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-file-alt text-yellow-600 mr-2"></i>
+                            <h4 class="font-medium text-gray-900">I-765</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Application for Employment Authorization</p>
+                        <div class="text-xs text-gray-500">
+                            <span class="bg-gray-100 px-2 py-1 rounded">Work Authorization</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-file-alt text-red-600 mr-2"></i>
+                            <h4 class="font-medium text-gray-900">G-28</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Notice of Entry of Appearance as Attorney</p>
+                        <div class="text-xs text-gray-500">
+                            <span class="bg-gray-100 px-2 py-1 rounded">Legal Representation</span>
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-file-alt text-indigo-600 mr-2"></i>
+                            <h4 class="font-medium text-gray-900">I-589</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Application for Asylum and for Withholding of Removal</p>
+                        <div class="text-xs text-gray-500">
+                            <span class="bg-gray-100 px-2 py-1 rounded">Asylum</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Client Modal -->
+    <div id="add-client-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-900">Add New Client</h3>
+                        <button onclick="hideAddClientModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <form class="px-6 py-4 space-y-6">
+                    <!-- Personal Information -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-900 mb-3">Personal Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth *</label>
+                                <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Country of Birth *</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">A-Number</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="A123456789">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-900 mb-3">Contact Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Current Address</label>
+                                <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case Information -->
+                    <div>
+                        <h4 class="text-md font-medium text-gray-900 mb-3">Case Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Case Type *</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                    <option value="">Select case type...</option>
+                                    <option value="family-based">Family-Based</option>
+                                    <option value="employment-based">Employment-Based</option>
+                                    <option value="citizenship">Citizenship</option>
+                                    <option value="asylum">Asylum</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Assigned Attorney *</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                    <option value="">Select attorney...</option>
+                                    <option value="sarah-johnson">Sarah Johnson, Esq.</option>
+                                    <option value="michael-davis">Michael Davis, Esq.</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="hideAddClientModal()" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
+                            Add Client
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-blue-500', 'text-blue-600');
+                btn.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.remove('border-transparent', 'text-gray-500');
+            event.target.classList.add('border-blue-500', 'text-blue-600');
+        }
+
+        // Chart initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('caseStatusChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['In Progress', 'Under Review', 'Approved', 'Pending', 'On Hold'],
+                    datasets: [{
+                        data: [45, 23, 38, 15, 7],
+                        backgroundColor: [
+                            '#FCD34D',
+                            '#60A5FA',
+                            '#34D399',
+                            '#A78BFA',
+                            '#F87171'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Modal functions
+        function showAddClientModal() {
+            document.getElementById('add-client-modal').classList.remove('hidden');
+        }
+
+        function hideAddClientModal() {
+            document.getElementById('add-client-modal').classList.add('hidden');
+        }
+
+        // Add assistant function
+        function addAssistant() {
+            const assistantsList = document.getElementById('assistants-list');
+            const newAssistant = document.createElement('div');
+            newAssistant.className = 'bg-white rounded-lg shadow p-4';
+            newAssistant.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <i class="fas fa-user text-green-600 text-lg mr-3"></i>
+                        <h4 class="font-medium text-gray-900">Legal Assistant</h4>
+                    </div>
+                    <button onclick="this.closest('.bg-white').remove()" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Credentials</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+            `;
+            assistantsList.appendChild(newAssistant);
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // In a real application, this would handle proper logout
+                alert('Logout functionality would be implemented here');
+            }
+        }
+
+        // Form submission handlers
+        document.getElementById('firm-setup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Firm configuration saved successfully!');
+        });
+
+        // Add client form submission
+        document.querySelector('#add-client-modal form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Client added successfully!');
+            hideAddClientModal();
+        });
+
+        // Search functionality
+        document.querySelector('input[placeholder*="Search clients"]').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            // In a real application, this would filter the client table
+            console.log('Searching for:', searchTerm);
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDqAa0wXDRXaXrpWlD44cPmKwxXvnATQKK%2F35PU2HCCO7Ol1B3dJ4rGk9LzTTrzLUImFhx3NYkdaNVGqvYyEkOzXGumQ5xNu6RV5GWB50SSZIFI2DUCzCyja5LonTAFSiZz3zviwkrHb5xCq79wgKcVC4NFzE0x0jPABYxvfS41imiZQA1xlHxshjQmb7M84el%2Fgus4MyRqG083M4L9FGGc78GMZ2UFjBdA6d1teOXt0E7ZBA7eUZ%2F6DGf%2BiVwkeUefwKdKu62cZGDWSmOci2s8CbzCg62CfI3IS%2BvwGINz62gQn8OcQ7Vgf8g7eon8cPfckF9y2fRKUmsWp3XUOaUHjRr44%2FmYl0TZyNQG9FcC7fO7kBSuYakpEciJ823ETWQlzRg3d%2F6dyUsb%2BciNenwDcHG%2F6i4MuxyeOqBParDMxjONTUyxDufj78wJUUDdksu%2B5RO2tJ%2F269oWcXIe2UlFdRPEJ5ErMbt4PcNq%2BvepGUYYLQ6Q6C80DBsMWM79zChLwo8E%2BQSrpPylRbPUeIHUY%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDqAa0wXDRXaXrpWlD44cPmKwxXvnATQKK/35PU2HCCO7Ol1B3dJ4rGk9LzTTrzLUImFhx3NYkdaNVGqvYyEkOzXGumQ5xNu6RV5GWB50SSZIFI2DUCzCyja5LonTAFSiZz3zviwkrHb5xCq79wgKcVC4NFzE0x0jPABYxvfS41imiZQA1xlHxshjQmb7M84el/gus4MyRqG083M4L9FGGc78GMZ2UFjBdA6d1teOXt0E7ZBA7eUZ/6DGf+iVwkeUefwKdKu62cZGDWSmOci2s8CbzCg62CfI3IS+vwGINz62gQn8OcQ7Vgf8g7eon8cPfckF9y2fRKUmsWp3XUOaUHjRr44/mYl0TZyNQG9FcC7fO7kBSuYakpEciJ823ETWQlzRg3d/6dyUsb+ciNenwDcHG/6i4MuxyeOqBParDMxjONTUyxDufj78wJUUDdksu+5RO2tJ/269oWcXIe2UlFdRPEJ5ErMbt4PcNq+vepGUYYLQ6Q6C80DBsMWM79zChLwo8E+QSrpPylRbPUeIHUY=";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
